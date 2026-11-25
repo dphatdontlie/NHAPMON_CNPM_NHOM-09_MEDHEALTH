@@ -1,0 +1,21 @@
+# Local credentials and environment files
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Generated dependencies and build output, when a stack is selected
+node_modules/
+.venv/
+__pycache__/
+dist/
+build/
+.next/
+coverage/
+
+# Local editor, operating-system and Office temporary files
+.idea/
+.DS_Store
+Thumbs.db
+~$*
+*.log
