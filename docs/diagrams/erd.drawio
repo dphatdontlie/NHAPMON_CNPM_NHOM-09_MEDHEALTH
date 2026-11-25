@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><mxfile host="app.diagrams.net"><diagram id="erd" name="MedHealth: ERD sơ bộ (FK trỏ tới PK)"><mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1490" pageHeight="1100"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="User" value="User
+id PK; email UNIQUE
+password_hash; role; is_active" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="130" width="320" height="150" as="geometry"/></mxCell><mxCell id="Patient" value="Patient
+id PK; user_id FK UNIQUE
+full_name; birth_date; phone" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="400" y="130" width="320" height="150" as="geometry"/></mxCell><mxCell id="Doctor" value="Doctor
+id PK; user_id FK UNIQUE
+specialty_id FK; is_active" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="760" y="130" width="320" height="150" as="geometry"/></mxCell><mxCell id="Specialty" value="Specialty
+id PK; name; is_active" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1120" y="130" width="320" height="150" as="geometry"/></mxCell><mxCell id="Appointment" value="Appointment
+id PK; code UNIQUE
+patient_id FK; availability_id FK
+status; version" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="400" y="410" width="320" height="150" as="geometry"/></mxCell><mxCell id="Encounter" value="Encounter
+id PK; appointment_id FK UNIQUE
+assessment; plan; published_at
+version" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="410" width="320" height="150" as="geometry"/></mxCell><mxCell id="Availability" value="Availability
+id PK; doctor_id FK
+start_at; end_at; capacity
+version" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="760" y="410" width="320" height="150" as="geometry"/></mxCell><mxCell id="Reminder" value="Reminder
+id PK; appointment_id FK
+recipient_user_id FK
+dedup_key UNIQUE; scheduled_at" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1120" y="410" width="320" height="150" as="geometry"/></mxCell><mxCell id="NotificationPreference" value="NotificationPreference
+user_id PK/FK
+enabled; lead_minutes" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="740" width="320" height="150" as="geometry"/></mxCell><mxCell id="AuditLog" value="AuditLog
+id PK; actor_user_id FK (nullable)
+action; resource_id; outcome" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="400" y="740" width="320" height="150" as="geometry"/></mxCell><mxCell id="Notification" value="Notification
+id PK; reminder_id FK; user_id FK
+summary; read_at" style="rounded=0;fillColor=#FFFFFF;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1120" y="740" width="320" height="150" as="geometry"/></mxCell><mxCell id="fk-note" value="Các FK tới User và Appointment được ghi trong bảng.
+Xem architecture.md để đối chiếu toàn bộ ràng buộc.
+NotificationPreference.user_id → User.id (1:1)
+Doctor.user_id → User.id (1:1)
+Reminder: recipient_user_id → User; appointment_id → Appointment
+Notification.user_id → User; AuditLog.actor_user_id → User" style="text;strokeColor=none;fillColor=none;whiteSpace=wrap;html=0;fontFamily=Arial;fontSize=14;strokeColor=#334155;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="50" y="925" width="1380" height="105" as="geometry"/></mxCell><mxCell id="edge-0" value="1:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Patient" target="User"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-1" value="N:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Doctor" target="Specialty"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-2" value="N:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Availability" target="Doctor"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-3" value="N:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Appointment" target="Patient"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-4" value="N:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Appointment" target="Availability"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-5" value="0..1:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Encounter" target="Appointment"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="edge-6" value="N:1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;fontSize=12;strokeColor=#64748B;" edge="1" parent="1" source="Notification" target="Reminder"><mxGeometry relative="1" as="geometry"/></mxCell></root></mxGraphModel></diagram></mxfile>
